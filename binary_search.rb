@@ -37,5 +37,17 @@ class Node
 	end
 end
 
+def breadth_first_search(target, root)
+	queue = [root]
+
+	while current = queue.shift
+		return current if current.value == target
+		queue << current.l_child if current.l_child
+		queue << current.r_child if current.r_child 
+	end
+end
+
 array = Array.new(80) { |i| i }
-Node.build_tree array.shuffle
+root = Node.build_tree array.shuffle
+node = breadth_first_search(array.sample, root)
+puts "#{node.value} parent: #{node.parent.value} children: #{node.l_child.value} #{node.r_child.value}"
