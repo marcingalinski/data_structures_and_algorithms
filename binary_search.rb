@@ -47,7 +47,24 @@ def breadth_first_search(target, root)
 	end
 end
 
+def depth_first_search(target, root)
+	stack = [root]
+	checked = []
+
+	while current = stack.last
+		return current if current.value == target
+		checked << current
+		if current.l_child && !checked.include?(current.l_child)
+			stack << current.l_child
+		elsif current.r_child && !checked.include?(current.r_child)
+			stack << current.r_child
+		else
+			stack.pop
+		end
+	end
+end
+
 array = Array.new(80) { |i| i }
 root = Node.build_tree array.shuffle
-node = breadth_first_search(array.sample, root)
-puts "#{node.value} parent: #{node.parent.value} children: #{node.l_child.value} #{node.r_child.value}"
+node = depth_first_search(array.sample, root)
+puts "#{node} parent: #{node.parent} children: #{node.l_child} #{node.r_child}"
