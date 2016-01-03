@@ -64,7 +64,14 @@ def depth_first_search(target, root)
 	end
 end
 
-array = Array.new(80) { |i| i }
+def dfs_rec(target, current)
+	result = current if current.value == target
+	result ||= dfs_rec(target, current.l_child) if current.l_child
+	result ||= dfs_rec(target, current.r_child) if current.r_child
+	result
+end
+
+array = Array.new(50) { |i| i }
 root = Node.build_tree array.shuffle
-node = depth_first_search(array.sample, root)
+node = dfs_rec(array.sample, root)
 puts "#{node} parent: #{node.parent} children: #{node.l_child} #{node.r_child}"
